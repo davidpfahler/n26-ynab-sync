@@ -1,0 +1,23 @@
+{
+  "name": "n26-ynab-sync",
+  "version": "1.0.0",
+  "description": "Sync N26 bank transactions to YNAB accounts.",
+  "main": "index.js",
+  "scripts": {
+    "test": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidpfahler/n26-ynab-sync.git"
+  },
+  "keywords": [
+    "YNAB",
+    "N26"
+  ],
+  "author": "Stephan Bönnemann & David Pfahler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidpfahler/n26-ynab-sync/issues"
+  },
+  "homepage": "https://github.com/davidpfahler/n26-ynab-sync#readme"
+}
