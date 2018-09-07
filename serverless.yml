@@ -56,7 +56,7 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
+  sync:
     handler: handler.sync
     events:
       - schedule:
