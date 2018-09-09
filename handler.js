@@ -25,7 +25,7 @@ module.exports.sync = async () => {
     .filter(t => t.confirmed > tresholdAgo);
 
   if (!rawTransactions.length) {
-    return "no transactions to sync";
+    return console.log("no transactions to sync");
   }
 
   const transactions = rawTransactions.map(t => ({
@@ -39,9 +39,13 @@ module.exports.sync = async () => {
   }));
 
   const ynabAPI = new ynab.API(YNAB_TOKEN);
-  await ynabAPI.transactions.bulkCreateTransactions(N26_YNAB_BUDGET, {
-    transactions
-  });
+  try {
+    await ynabAPI.transactions.bulkCreateTransactions(N26_YNAB_BUDGET, {
+      transactions
+    });
+  } catch (err) {
+    console.error(err);
+  }
 
-  return transactions.length;
+  console.log(`${transactions.length} transactions synced`);
 };
