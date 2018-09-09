@@ -12,6 +12,7 @@ const {
 } = process.env;
 
 module.exports.sync = async () => {
+  console.log(`Starting sync on ${new Date()}.`);
   const tresholdAgo = Date.now() - 360000;
   const n26 = await new N26(N26_EMAIL, N26_PASSWORD);
 
@@ -25,7 +26,8 @@ module.exports.sync = async () => {
     .filter(t => t.confirmed > tresholdAgo);
 
   if (!rawTransactions.length) {
-    return console.log("no transactions to sync");
+    console.log("No transactions to sync. Done.");
+    process.exit(0);
   }
 
   const transactions = rawTransactions.map(t => ({
@@ -44,8 +46,9 @@ module.exports.sync = async () => {
       transactions
     });
   } catch (err) {
-    console.error(err);
+    return console.error(err);
   }
 
-  console.log(`${transactions.length} transactions synced`);
+  console.log(`${transactions.length} transactions synced. Done.`);
+  process.exit(0);
 };
