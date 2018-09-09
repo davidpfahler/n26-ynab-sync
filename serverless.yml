@@ -71,7 +71,7 @@ functions:
 #     handler: handler.sync
 #     events:
 #       - schedule:
-#         rate: rate(5 minutes)
+#         rate: cron(*/5 * * * ? *)
 #         enabled: true
 
 #    The following are a few example events you can configure
