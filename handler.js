@@ -29,6 +29,8 @@ module.exports.sync = async (event, context, callback) => {
     callback(null, "No transactions to sync. Done.");
   }
 
+  console.log("rawTransactions: " + JSON.stringify(rawTransactions));
+
   const transactions = rawTransactions.map(t => ({
     account_id: N26_YNAB_ACCOUNT,
     date: new Date(t.confirmed).toISOString().split("T")[0],
@@ -38,6 +40,9 @@ module.exports.sync = async (event, context, callback) => {
     approved: false,
     import_id: t.id
   }));
+
+  // log transactions so we can inspect them later
+  console.log("transactions: " + JSON.stringify(transactions));
 
   const ynabAPI = new ynab.API(YNAB_TOKEN);
   try {
