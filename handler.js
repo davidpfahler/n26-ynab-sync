@@ -13,20 +13,22 @@ const {
 
 module.exports.sync = async (event, context, callback) => {
   console.log(`Starting sync on ${new Date()}.`);
+  // threshold should be above cron interval to guarantee that we don't miss
+  // any transactions.
   const tresholdAgo = Date.now() - 360000;
   const n26 = await new N26(N26_EMAIL, N26_PASSWORD);
 
   const rawTransactions = (await n26.transactions({
     limit: 10
   }))
-    // get the transactions from the last 6minutes
+    // get the transactions from the last 6 minutes
     // this lambda will run every 5min
     // so we get everything since it ran last (+ buffer)
     // not a perfect filtering mechanism, but it's stateless ¯\_(ツ)_/¯
     .filter(t => t.confirmed > tresholdAgo);
 
   if (!rawTransactions.length) {
-    callback(null, "No transactions to sync. Done.");
+    return callback(null);
   }
 
   console.log("rawTransactions: " + JSON.stringify(rawTransactions));
